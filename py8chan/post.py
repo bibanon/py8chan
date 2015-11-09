@@ -37,6 +37,17 @@ class Post(object):
         thumbnail_url (string): URL of the thumbnail attached to this post.
         has_file (bool): Whether this post has a file attached to it.
         url (string): URL of this post.
+
+	New Attributes:
+	    all_files (tuple): Returns tuples of File URLs from one post.
+	    all_thumbs (tuple): Returns tuples of Thumbnail URLs from one post.
+
+	Special Attributes: Attributes inherited from the 4chan API. In this case, they are used to grab the first referenced picture.
+	    
+	
+	Undefined Attributes: Not implemented in 8chan API. Do not use.
+        poster_id (int): Poster ID.
+        file_deleted (bool): Whether the file attached to this post was deleted after being posted.
         semantic_url (string): URL of this post, with the thread's 'semantic' component.
         semantic_slug (string): This post's 'semantic slug'.
     """
@@ -55,9 +66,10 @@ class Post(object):
         return self._data.get('no')
     number = num = no = post_number = post_id
 
+    # (May Change) 8chan/vichan does not use administrative IDs
     @property
     def poster_id(self):
-        return self._data.get('id')
+        raise AttributeError( "'py8chan.Post' object has no attribute 'poster_id'" )
 
     @property
     def name(self):
@@ -116,7 +128,7 @@ class Post(object):
 
         board = self._thread._board
         
-        return '%i%s' % (
+        return '%s%s' % (
             self._data['tim'],
             self._data['ext']
         )
@@ -148,9 +160,10 @@ class Post(object):
     def file_height(self):
         return self._data.get('h')
 
+    # (May Change) 8chan/vichan does not inform you of deleted files
     @property
     def file_deleted(self):
-        return self._data.get('filedeleted') == 1
+        raise AttributeError( "'py8chan.Post' object has no attribute 'file_deleted'" )
 
     @property
     def thumbnail_width(self):
@@ -167,7 +180,8 @@ class Post(object):
 
         board = self._thread._board
 
-        return '%is.jpg' % (
+        # 8chan uses string for tim
+        return '%ss.jpg' % (
             self._data['tim']
         )
 
@@ -194,14 +208,16 @@ class Post(object):
     @property
     def url(self):
         return '%s#p%i' % (self._thread.url, self.post_number)
-
+    
+    # 8chan/vichan does not use semantic urls
     @property
     def semantic_url(self):
-        return '%s#p%i' % (self._thread.semantic_url, self.post_number)
-
+        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_url'" )
+    
+    # 8chan/vichan does not use semantic slugs
     @property
     def semantic_slug(self):
-        return self._data.get('semantic_url')
+        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_slug'" )
 
     def __repr__(self):
         return '<Post /%s/%i#%i, has_file: %r>' % (

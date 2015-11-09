@@ -1,7 +1,7 @@
 # credits to Anarov for improved example.py
-import basc_py4chan
+import py8chan
 
-b = basc_py4chan.Board('b')
+b = py8chan.Board('b')
 threads = b.get_threads()
 print("Got %i threads" % len(threads))
 first_thread = threads[0]
