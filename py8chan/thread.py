@@ -5,7 +5,7 @@ from .url import Url
 
 
 class Thread(object):
-    """Represents a 4chan thread.
+    """Represents a thread.
 
     Attributes:
         closed (bool): Whether the thread has been closed.
@@ -14,12 +14,16 @@ class Thread(object):
         posts (list of :class:`basc_py4chan.Post`): List of all posts in the thread, including the OP.
         all_posts (list of :class:`basc_py4chan.Post`): List of all posts in the thread, including the OP and any omitted posts.
         url (string): URL of the thread, not including semantic slug.
-        semantic_url (string): URL of the thread, with the semantic slug.
-        semantic_slug (string): The 'pretty URL slug' assigned to this thread by 4chan.
+        
+	Undefined Attributes: Not implemented in 8chan API. Do not use.
+        replies and images (in OP) - Infuriatingly, the OP post in a thread
+        doesn't list how many replies there are in a thread.
+        semantic_url (string): URL of this post, with the thread's 'semantic' component.
+        semantic_slug (string): This post's 'semantic slug'.
     """
     def __init__(self, board, id):
         self._board = board
-        self._url = Url(board=board.name, https=board.https)       # 4chan URL generator
+        self._url = Url(board=board.name, https=board.https)       # 8chan URL generator
         self.id = self.number = self.num = self.no = id
         self.topic = None
         self.replies = []
@@ -207,13 +211,15 @@ class Thread(object):
     def url(self):
         return self._url.thread_url(self.id)
 
+    # 8chan/vichan does not use semantic urls
     @property
     def semantic_url(self):
-        return '%s/%s' % (self.url, self.semantic_slug)
-
+        raise AttributeError( "'py8chan.Thread' object has no attribute 'semantic_url'" )
+    
+    # 8chan/vichan does not use semantic slugs
     @property
     def semantic_slug(self):
-        return self.topic.semantic_slug
+        raise AttributeError( "'py8chan.Thread' object has no attribute 'semantic_slug'" )
 
     def __repr__(self):
         extra = ''

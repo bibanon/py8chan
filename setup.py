@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""4chan Python Library.
+"""8chan/vichan Python Library.
 
-BASC-py4chan is a Python library that gives access to the 4chan API
+py8chan is a Python library that gives access to the 8chan/vichan API
 and an object-oriented way to browse and get board and thread
 information quickly and easily.
 
@@ -16,22 +16,21 @@ the LICENSE file for more details.
 from setuptools import setup
 
 setup(
-    name='BASC-py4chan',
-    version='0.5.5',
-    description=("Python 4chan API Wrapper. Improved version of Edgeworth's "
-                 "original py-4chan wrapper."),
+    name='py8chan',
+    version='0.0.1',
+    description=("Python 8chan/vichan API Wrapper. Based on BASC-py4chan by the Bbiliotheca Anonoma"),
     long_description=open('README.rst').read(),
     license=open('LICENSE').read(),
     author='Antonizoon (Lawrence Wu)',
     author_email='sagnessagiel@gmail.com',
-    url='http://github.com/bibanon/BASC-py4chan',
-    packages=['basc_py4chan'],
+    url='http://github.com/bibanon/py8chan',
+    packages=['py8chan'],
     package_dir={
-        'basc_py4chan': 'basc_py4chan',
+        'py8chan': 'py8chan',
     },
     package_data={'': ['README.rst', 'LICENSE']},
     install_requires=['requests >= 1.0.0'],
-    keywords='4chan api',
+    keywords='8chan api vichan',
     classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',

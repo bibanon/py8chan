@@ -1,9 +1,9 @@
 # credits to Anarov for improved example.py
-import basc_py4chan
+import py8chan
 
 
 def main():
-    v = basc_py4chan.Board('v')
+    v = py8chan.Board('v')
     thread = v.get_thread(152900882)
     print(thread)
     print('Sticky?', thread.sticky)
