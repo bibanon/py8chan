@@ -259,12 +259,11 @@ class Board(object):
     def name(self):
         return self._board_name
 
-    # py8chan does not use thread titles, unlike BASC-py4chan
+    """8chan uses a completely different catalog system. We will have to disable these board information features until we manage to figure it out."""
     @property
     def title(self):
         raise AttributeError( "'py8chan.Board' object has no attribute 'title'" )
     
-    # py8chan does not use worksafe tag, unlike BASC-py4chan
     @property
     def is_worksafe(self):
         raise AttributeError( "'py8chan.Board' object has no attribute 'is_worksafe'" )
