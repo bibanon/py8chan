@@ -4,6 +4,7 @@ from datetime import datetime
 
 from .url import Url
 from .util import clean_comment_body
+from .file import File
 
 
 class Post(object):
@@ -22,30 +23,14 @@ class Post(object):
         is_op (bool): Whether this is the OP (first post of the thread)
         timestamp (int): Unix timestamp for this post.
         datetime (:class:`datetime.datetime`): Datetime time of this post.
-        file_md5 (string): MD5 hash of the file attached to this post.
-        file_md5_hex (string): Hex-encoded MD5 hash of the file attached to this post.
-        filename (string): Original name of the file attached to this post.
-        file_url (string): URL of the file attached to this post.
-        file_extension (string): Extension of the file attached to this post. Eg: ``png``, ``webm``, etc.
-        file_size (int): Size of the file attached to this post.
-        file_width (int): Width of the file attached to this post.
-        file_height (int): Height of the file attached to this post.
-        file_deleted (bool): Whether the file attached to this post was deleted after being posted.
-        thumbnail_width (int): Width of the thumbnail attached to this post.
-        thumbnail_height (int): Height of the thumbnail attached to this post.
-        thumbnail_fname (string): Filename of the thumbnail attached to this post.
-        thumbnail_url (string): URL of the thumbnail attached to this post.
+        first_file (File): The first file of the post.
+        all_files (File): Returns the File objects of all files in the post.
+        extra_files (File): Returns the File objects of all extra files in the post, if any.
         has_file (bool): Whether this post has a file attached to it.
+        has_extra_files (bool): Whether this post has more than one file attached to it.
         url (string): URL of this post.
-
-	New Attributes:
-	    all_files (tuple): Returns tuples of File URLs from one post.
-	    all_thumbs (tuple): Returns tuples of Thumbnail URLs from one post.
-
-	Special Attributes: Attributes inherited from the 4chan API. In this case, they are used to grab the first referenced picture.
-	    
-	
-	Undefined Attributes: Not implemented in 8chan API. Do not use.
+    
+    Undefined Attributes: Not implemented in 8chan API. Do not use.
         poster_id (int): Poster ID.
         file_deleted (bool): Whether the file attached to this post was deleted after being posted.
         semantic_url (string): URL of this post, with the thread's 'semantic' component.
@@ -54,7 +39,11 @@ class Post(object):
     def __init__(self, thread, data):
         self._thread = thread
         self._data = data
-        self._url = Url(board=self._thread._board.name, https=thread.https)		# 4chan URL generator
+        self._url = Url(board=self._thread._board.name, https=thread.https)        # 4chan URL generator
+        
+        # add file objects if they exist
+        if self.has_file:
+            self.file1 = File(self, self._data)
 
     @property
     def is_op(self):
@@ -108,102 +97,40 @@ class Post(object):
         return datetime.fromtimestamp(self._data['time'])
 
     @property
-    def file_md5(self):
+    def first_file(self):
         if not self.has_file:
             return None
-
-        return self._data['md5'].decode('base64')
-
-    @property
-    def file_md5_hex(self):
-        if not self.has_file:
-            return None
-
-        return self.file_md5.encode('hex')
-
-    @property
-    def filename(self):
-        if not self.has_file:
-            return None
-
-        board = self._thread._board
         
-        return '%s%s' % (
-            self._data['tim'],
-            self._data['ext']
-        )
+        return self.file1
 
-    @property
-    def file_url(self):
-        if not self.has_file:
-            return None
+    def all_files(self):
+        """Returns the File objects of all files in the post."""
+        # append first file if it exists
+        if self.has_file:
+            yield self.file1
+        
+        # append extra files if they exist
+        if self.has_extra_files:
+            for item in self._data['extra_files']:
+                yield File(self, item)
 
-        board = self._thread._board
-        return self._url.file_url(
-            self._data['tim'],
-            self._data['ext']
-        )
-
-    @property
-    def file_extension(self):
-        return self._data.get('ext')
-
-    @property
-    def file_size(self):
-        return self._data.get('fsize')
-
-    @property
-    def file_width(self):
-        return self._data.get('w')
-
-    @property
-    def file_height(self):
-        return self._data.get('h')
-
-    # (May Change) 8chan/vichan does not inform you of deleted files
-    @property
-    def file_deleted(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'file_deleted'" )
-
-    @property
-    def thumbnail_width(self):
-        return self._data.get('tn_w')
-
-    @property
-    def thumbnail_height(self):
-        return self._data.get('tn_h')
-
-    @property
-    def thumbnail_fname(self):
-        if not self.has_file:
-            return None
-
-        board = self._thread._board
-
-        # 8chan uses string for tim
-        return '%ss.jpg' % (
-            self._data['tim']
-        )
-
-    @property
-    def thumbnail_url(self):
-        if not self.has_file:
-            return None
-
-        board = self._thread._board
-        return self._url.thumb_url(
-            self._data['tim']
-        )
+    def extra_files(self):
+        """Returns the File objects of all extra files in the post, if any."""
+        # append extra files if they exist
+        if self.has_extra_files:
+            for item in self._data['extra_files']:
+                yield File(self, item)
 
     @property
     def has_file(self):
         return 'filename' in self._data
 
-    def file_request(self):
-        return self._thread._board._requests_session.get(self.file_url)
-
-    def thumbnail_request(self):
-        return self._thread._board._requests_session.get(self.thumbnail_url)
+    @property
+    def has_extra_files(self):
+        if 'extra_files' in self._data:
+            return True
+        else:
+            return False
 
     @property
     def url(self):
@@ -220,9 +147,10 @@ class Post(object):
         raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_slug'" )
 
     def __repr__(self):
-        return '<Post /%s/%i#%i, has_file: %r>' % (
+        return '<Post /%s/%i.html#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,
             self._thread.id,
             self.post_number,
-            self.has_file
+            self.has_file,
+            self.has_extra_files
         )

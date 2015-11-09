@@ -12,9 +12,10 @@ and an object-oriented way to browse and get board and thread
 information quickly and easily.
 """
 
-__version__ = '0.5.5'
+__version__ = '0.0.1'
 
 from .board import Board, board, get_boards, get_all_boards
+from .url import Url
 from .thread import Thread
 from .post import Post
-from .url import Url
+from .file import File

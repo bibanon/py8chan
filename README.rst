@@ -36,8 +36,9 @@ Usage
 
     print(thread)
 
-    for file in thread.files():
-        print(file)
+    # supports displaying extra files in one post as well!
+    for file in thread.all_files():
+        print(file.file_url)
         
     # In a while...
     print("I fetched", thread.update(), "new replies.")
