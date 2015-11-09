@@ -70,8 +70,8 @@ class Thread(object):
         t.replies.extend(Post(t, p) for p in rest)
 
         t.id = head.get('no', id)
-        t.num_replies = head['replies']
-        t.num_images = head['images']
+        t.num_replies = len(posts) - 1	# There's no "replies" item in OP on 8ch!
+        t.num_images = 0				# There's no "images" item in OP on 8ch!
         t.omitted_images = head.get('omitted_images', 0)
         t.omitted_posts = head.get('omitted_posts', 0)
 
@@ -88,35 +88,68 @@ class Thread(object):
 
     def files(self):
         """Returns the URLs of all files attached to posts in the thread."""
+        # yield all from the topic
         if self.topic.has_file:
-            yield self.topic.file_url
+            for item in self.topic.all_files():
+                yield item.file_url
+
+        # yield all from other posts
         for reply in self.replies:
             if reply.has_file:
-                yield reply.file_url
+                for item in reply.all_files():
+                    yield item.file_url
 
     def thumbs(self):
         """Returns the URLs of all thumbnails in the thread."""
+        # yield all from the topic
         if self.topic.has_file:
-            yield self.topic.thumbnail_url
+            for item in self.topic.all_files():
+                yield item.thumbnail_url
+
+        # yield all from other posts
         for reply in self.replies:
             if reply.has_file:
-                yield reply.thumbnail_url
+                for item in reply.all_files():
+                    yield item.thumbnail_url
 
     def filenames(self):
         """Returns the filenames of all files attached to posts in the thread."""
+        # yield all from the topic
         if self.topic.has_file:
-            yield self.topic.filename
+            for item in self.topic.all_files():
+                yield item.filename
+
+        # yield all from other posts
         for reply in self.replies:
             if reply.has_file:
-                yield reply.filename
+                for item in reply.all_files():
+                    yield item.filename
 
     def thumbnames(self):
         """Returns the filenames of all thumbnails in the thread."""
+        # yield all from the topic
         if self.topic.has_file:
-            yield self.topic.thumbnail_fname
+            for item in self.topic.all_files():
+                yield item.thumbnail_fname
+
+        # yield all from other posts
         for reply in self.replies:
             if reply.has_file:
-                yield reply.thumbnail_fname
+                for item in reply.all_files():
+                    yield item.thumbnail_fname
+
+    def file_objects(self):
+        """Returns the py8chan File Objects of all files attached to posts in the thread."""
+        # yield all from the topic
+        if self.topic.has_file:
+            for item in self.topic.all_files():
+                yield item
+
+        # yield all from other posts
+        for reply in self.replies:
+            if reply.has_file:
+                for item in reply.all_files():
+                    yield item
 
     def update(self, force=False):
         """Fetch new posts from the server.
@@ -228,6 +261,6 @@ class Thread(object):
                 self.omitted_images, self.omitted_posts
             )
 
-        return '<Thread /%s/%i, %i replies%s>' % (
+        return '<Thread /%s/%i.html, %i replies%s>' % (
             self._board.name, self.id, len(self.replies), extra
         )

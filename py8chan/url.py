@@ -19,8 +19,8 @@ class Url(object):
         # List (JSON) - http://8ch.net/newspaper/threads.json
         # Catalog (JSON) - http://8ch.net/newspaper/catalog.json
         #
-        # Image - https://media.8ch.net/newspaper/src/1421068790600.jpg
-        # Thumb - https://media.8ch.net/newspaper/thumb/1421068790600.jpg
+        # Image - https://8ch.net/newspaper/src/1421068790600.jpg
+        # Thumb - https://8ch.net/newspaper/thumb/1421068790600.jpg
         #
         # Static - http://8ch.net/static/blank.gif
         
@@ -28,7 +28,7 @@ class Url(object):
         DOMAIN = {
             'api': self._protocol + self._site_url,   # API subdomain
             'boards': self._protocol + self._site_url, # HTML subdomain
-            'file': self._protocol + 'media.' + self._site_url,  # file (image) host
+            'file': self._protocol + self._site_url,  # file (image) host
             'static': self._protocol + self._site_url + "/static" # static host
         }
         
@@ -44,7 +44,7 @@ class Url(object):
             },
             'data': {
                 'file': DOMAIN['file'] + '/{board}/src/{tim}{ext}',
-                'thumbs': DOMAIN['file'] + '/{board}/thumbs/{tim}.jpg',
+                'thumbs': DOMAIN['file'] + '/{board}/thumb/{tim}.jpg',
                 'static': DOMAIN['static'] + '/{item}'
             }
         }
