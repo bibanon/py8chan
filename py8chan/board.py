@@ -189,18 +189,19 @@ class Board(object):
 
         return threads
 
-    def get_threads(self, page=1):
+    # 8chan/vichan board pages actually start at 0, not 1!
+    def get_threads(self, page=0):
         """Returns all threads on a certain page.
-
+    
         Gets a list of Thread objects for every thread on the given page. If a thread is
         already in our cache, the cached version is returned and thread.want_update is
         set to True on the specific thread object.
-
-        Pages on 4chan are indexed from 1 onwards.
-
+    
+        Pages on 8chan/vichan are indexed from 0 onwards. (not 1 as in modern 4chan: 4chan used to start from 0)
+    
         Args:
             page (int): Page to request threads for. Defaults to the first page.
-
+    
         Returns:
             list of :mod:`basc_py4chan.Thread`: List of Thread objects representing the threads on the given page.
         """
@@ -258,23 +259,25 @@ class Board(object):
     def name(self):
         return self._board_name
 
+    # py8chan does not use thread titles, unlike BASC-py4chan
     @property
     def title(self):
-        return self._get_metadata('title')
-
+        raise AttributeError( "'py8chan.Board' object has no attribute 'title'" )
+    
+    # py8chan does not use worksafe tag, unlike BASC-py4chan
     @property
     def is_worksafe(self):
-        if self._get_metadata('ws_board'):
-            return True
-        return False
-
+        raise AttributeError( "'py8chan.Board' object has no attribute 'is_worksafe'" )
+    
+    # py8chan does not use page_count variable, unlike BASC-py4chan
     @property
     def page_count(self):
-        return self._get_metadata('pages')
-
+        raise AttributeError( "'py8chan.Board' object has no attribute 'page_count'" )
+    
+    # py8chan does not use threads_per_page variable, unlike BASC-py4chan
     @property
     def threads_per_page(self):
-        return self._get_metadata('per_page')
+        raise AttributeError( "'py8chan.Board' object has no attribute 'threads_per_page'" )
 
     @property
     def https(self):
