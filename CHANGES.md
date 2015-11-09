@@ -1,5 +1,9 @@
 This file documents all changes made to py8chan, based on py4chan.
 
+Currently, as of v0.0.1, there should be enough features to get the BASC-Archiver working, as a drop-in replacement (Only the Post Class was changed significantly, which does not affect the BASC-Archiver). 
+
+However, there are still a few unimplemented things.
+
 ## To Do
 
 * **BASC-Archiver Support** - The BASC-Archiver now needs to have an Eightchan Class to allow py8chan to work on it.
