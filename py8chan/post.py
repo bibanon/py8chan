@@ -30,7 +30,7 @@ class Post(object):
         has_extra_files (bool): Whether this post has more than one file attached to it.
         url (string): URL of this post.
     
-    Undefined Attributes: Not implemented in 8chan API. Do not use.
+    Undefined Attributes (Not implemented in 8chan API. Do not use.): 
         poster_id (int): Poster ID.
         file_deleted (bool): Whether the file attached to this post was deleted after being posted.
         semantic_url (string): URL of this post, with the thread's 'semantic' component.
