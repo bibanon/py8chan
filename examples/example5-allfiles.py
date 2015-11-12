@@ -7,10 +7,7 @@ def main():
 	v = py8chan.Board('v')
 	threads = v.get_threads()
 	print("Got %i threads" % len(threads))
-
-	# pages on 8chan start at 0, not 1
-	first_page = 0
-	first_thread = v.get_thread(6919133)
+	first_thread = threads[0]
 
 	# display the url of every file on the first thread, even extra files in posts
 	for url in first_thread.files():
