@@ -21,7 +21,6 @@ class File(object):
         file_size (int): Size of the file attached to this post.
         file_width (int): Width of the file attached to this post.
         file_height (int): Height of the file attached to this post.
-        file_deleted (bool): Whether the file attached to this post was deleted after being posted.
         thumbnail_width (int): Width of the thumbnail attached to this post.
         thumbnail_height (int): Height of the thumbnail attached to this post.
         thumbnail_fname (string): Filename of the thumbnail attached to this post.
