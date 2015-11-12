@@ -78,7 +78,7 @@ class File(object):
     # (May Change) 8chan/vichan does not inform you of deleted files
     @property
     def file_deleted(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'file_deleted'" )
+        raise AttributeError("'py8chan.File' object has no attribute 'file_deleted'")
 
     @property
     def thumbnail_width(self):
