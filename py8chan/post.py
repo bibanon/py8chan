@@ -123,7 +123,7 @@ class Post(object):
 
     @property
     def has_file(self):
-        return 'filename' in self._data
+        return self.file1.filename
 
     @property
     def has_extra_files(self):
