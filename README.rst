@@ -1,5 +1,5 @@
 8chan/vichan Python Library
-====================
+===========================
 The Bibliotheca Anonoma's **complete Python Wrapper for the 8chan API.**
 Uses requests, respects if-modified-since headers on updating threads.
 Caches thread objects. Fun stuff.
@@ -46,7 +46,7 @@ Usage
 Documentation
 -------------
 
-This library extends the classes of `BASC-py4chan <https://github.com/bibanon/BASC-py4chan>`_. For the most part, it inherits all functions and remains compatible. See the BASC-py4chan documentation for more info.
+This library extends the classes of `BASC-py4chan <https://github.com/bibanon/BASC-py4chan>`_. For the most part, it inherits most functions and remains compatible. See the BASC-py4chan documentation for more info.
 
 `BASC-py4chan Documentation <http://basc-py4chan.readthedocs.org/en/latest/index.html>`_
 

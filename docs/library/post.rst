@@ -1,21 +1,21 @@
-:class:`basc_py4chan.Post` – 4chan Post
+:class:`py8chan.Post` – 8chan Post
 =======================================
 
-:class:`basc_py4chan.Post` allows for standard access to a 4chan post.
+:class:`py8chan.Post` allows for standard access to a 8chan post.
 
 Example
 -------
 
-Here is a sample application that grabs and prints :class:`basc_py4chan.Thread` and :class:`basc_py4chan.Post` information:
+Here is a sample application that grabs and prints :class:`py8chan.Thread` and :class:`py8chan.Post` information:
 
 .. code-block:: python
 
     # credits to Anarov for improved example
     from __future__ import print_function
-    import basc_py4chan
+    import py8chan
 
     # get the board we want
-    board = basc_py4chan.Board('v')
+    board = py8chan.Board('v')
 
     # select the first thread on the board
     all_thread_ids = board.get_all_thread_ids()
@@ -43,6 +43,6 @@ Here is a sample application that grabs and prints :class:`basc_py4chan.Thread` 
 Basic Usage
 -----------
 
-.. autoclass:: basc_py4chan.Post
+.. autoclass:: py8chan.Post
 
-    Post objects are not instantiated directly, but through a :class:`basc_py4chan.Thread` object with an attribute like :attr:`basc_py4chan.Thread.all_posts`.
+    Post objects are not instantiated directly, but through a :class:`py8chan.Thread` object with an attribute like :attr:`py8chan.Thread.all_posts`.
