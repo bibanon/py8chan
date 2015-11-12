@@ -1,6 +1,6 @@
 # credits to Anarov for improved example.py
+from __future__ import print_function
 import py8chan
-
 
 def main():
     if len(sys.argv) != 3:
