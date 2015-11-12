@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# BASC-py4chan documentation build configuration file, created by
+# py8chan documentation build configuration file, created by
 # sphinx-quickstart on Fri Dec  5 08:19:29 2014.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -41,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'BASC-py4chan'
+project = u'py8chan'
 copyright = u'2014, Antonizoon (Antonizoon Overtwater)'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -174,7 +174,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'BASC-py4chandoc'
+htmlhelp_basename = 'py8chandoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -193,7 +193,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'BASC-py4chan.tex', u'BASC-py4chan Documentation',
+  ('index', 'py8chan.tex', u'py8chan Documentation',
    u'Antonizoon (Antonizoon Overtwater)', 'manual'),
 ]
 
@@ -223,7 +223,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'basc-py4chan', u'BASC-py4chan Documentation',
+    ('index', 'py8chan', u'py8chan Documentation',
      [u'Antonizoon (Antonizoon Overtwater)'], 1)
 ]
 
@@ -237,8 +237,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'BASC-py4chan', u'BASC-py4chan Documentation',
-   u'Antonizoon (Antonizoon Overtwater)', 'BASC-py4chan', 'One line description of project.',
+  ('index', 'py8chan', u'py8chan Documentation',
+   u'Antonizoon (Antonizoon Overtwater)', 'py8chan', 'One line description of project.',
    'Miscellaneous'),
 ]
 

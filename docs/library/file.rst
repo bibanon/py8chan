@@ -1,4 +1,4 @@
-:class:`py8chan.File` – 4chan File
+:class:`py8chan.File` – 8chan File
 =======================================
 
 :class:`py8chan.Post` allows for standard access to a 4chan file. This provides programs with a complete File object that contains all metadata about the 4chan file, and makes migration easy if 4chan ever makes multiple files in one Post possible (as 8chan does).
