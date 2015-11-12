@@ -10,13 +10,13 @@ class Thread(object):
     Attributes:
         closed (bool): Whether the thread has been closed.
         sticky (bool): Whether this thread is a 'sticky'.
-        topic (:class:`basc_py4chan.Post`): Topic post of the thread, the OP.
-        posts (list of :class:`basc_py4chan.Post`): List of all posts in the thread, including the OP.
-        all_posts (list of :class:`basc_py4chan.Post`): List of all posts in the thread, including the OP and any omitted posts.
+        topic (:class:`py8chan.Post`): Topic post of the thread, the OP.
+        posts (list of :class:`py8chan.Post`): List of all posts in the thread, including the OP.
+        all_posts (list of :class:`py8chan.Post`): List of all posts in the thread, including the OP and any omitted posts.
         url (string): URL of the thread, not including semantic slug.
         
-	Undefined Attributes: Not implemented in 8chan API. Do not use.
-        replies and images (in OP) - Infuriatingly, the OP post in a thread
+	Undefined Attributes (Not implemented in 8chan API. Do not use.):
+        replies and images: Infuriatingly, the OP post in a thread
         doesn't list how many replies there are in a thread.
         semantic_url (string): URL of this post, with the thread's 'semantic' component.
         semantic_slug (string): This post's 'semantic slug'.
@@ -139,7 +139,7 @@ class Thread(object):
                     yield item.thumbnail_fname
 
     def file_objects(self):
-        """Returns the py8chan File Objects of all files attached to posts in the thread."""
+        """Returns the :class:`py8chan.File` objects of all files attached to posts in the thread."""
         # yield all from the topic
         if self.topic.has_file:
             for item in self.topic.all_files():
@@ -261,6 +261,6 @@ class Thread(object):
                 self.omitted_images, self.omitted_posts
             )
 
-        return '<Thread /%s/%i.html, %i replies%s>' % (
+        return '<Thread /%s/%i, %i replies%s>' % (
             self._board.name, self.id, len(self.replies), extra
         )
