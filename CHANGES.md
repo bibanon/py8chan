@@ -12,6 +12,28 @@ However, there are still a few unimplemented things.
 * **8chan Board List Support** - Obviously, 8chan has a very large list of public boards. It can be obtained if need be.
 * **8chan Catalog Support** - 8chan has a catalog format that is completely different from 4chan's. Complete overhaul will be necessary.
 
+## Differences from 4chan API
+
+The basc_py4chan library required some modifications to make this possible. In particular, the introduction of a Url Class generator that could be inherited.
+
+vichan's API tries to stick to the 4chan API standard, but it has some differences, `listed here. <https://github.com/vichan-devel/vichan-API/>`_
+
+* **Incompatibilities** - Type differences to watch out for.
+  * `tim` (string) - UNIX timestamp + microseconds. This is a string instead of an integer on 4chan API, since it is actually only used by image filenames. Python converts types on it's own, so no need to worry about this.
+* **Not Implemented Yet** - Might become a feature in the future, so note it when overriding.
+  * `id` (string) - text (8 characters), Mod, Admin, Developer, Founder. Seems a bit redundant when we have the capcode.
+  * `filedeleted` (integer) - 0 or 1, states if file was deleted.
+  * `spoiler` (integer) - 0 or 1, states if file was spoilered.
+* **Does Not Exist** - It's not used and won't be for the foreseeable future.
+  * `archived` - A integer with either 0 or 1.
+  * `now` - Date and timestamp used by 4chan based on EST/EDT timezone. Vichan autogenerates this from UNIX `tim` instead, since everyone's timezone can differ.
+  * `custom_spoiler` - No custom spoilers, let alone spoilers of any kind yet.
+  * `bumplimit` - No limit.
+  * `imagelimit` - No limit.
+  * `capcode_replies` - Not used.
+  * `tag` - Not used.
+  * `semantic_url` - Not used.
+
 ## Changes
 
 * `Url` Class
