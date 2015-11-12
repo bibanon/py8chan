@@ -147,7 +147,7 @@ class Post(object):
         raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_slug'" )
 
     def __repr__(self):
-        return '<Post /%s/%i.html#%i, has_file: %r, has_extra_files: %r>' % (
+        return '<Post /%s/%i#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,
             self._thread.id,
             self.post_number,

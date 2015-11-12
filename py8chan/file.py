@@ -108,7 +108,7 @@ class File(object):
         return self._thread._board._requests_session.get(self.thumbnail_url)
         
     def __repr__(self):
-        return '<File %s from Post /%s/%i.html#%i>' % (
+        return '<File %s from Post /%s/%i#%i>' % (
             self.filename,
             self._post._thread._board.name,
             self._post._thread.id,
