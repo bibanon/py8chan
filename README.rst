@@ -7,6 +7,8 @@ Caches thread objects. Fun stuff.
 An absolute must if you want to interface with or scrape from 8chan or other vichan-based imageboards/textboards,
 using a Python script._
 
+`Hosted Documentation <http://py8chan.readthedocs.org/en/latest/index.html>`_
+
 `Github Repository <https://github.com/bibanon/py8chan>`_
 
 You can install this library `straight from
@@ -37,7 +39,7 @@ Usage
     print(thread)
 
     # supports displaying extra files in one post as well!
-    for file in thread.all_files():
+    for file in thread.file_objects():
         print(file.file_url)
         
     # In a while...
@@ -51,7 +53,7 @@ This library mostly extends the classes of `BASC-py4chan <https://github.com/bib
 `py8chan Documentation <http://py8chan.readthedocs.org/en/latest/index.html>`_
 
 Notice that some functions are not implemented in the 8chan API. These functions will `raise an AttributeError when used. <http://stackoverflow.com/a/23126260>`_
-  
+
 License
 -------
 
