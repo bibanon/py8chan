@@ -60,7 +60,8 @@ def main():
     mkdirs(images_path)
 
     # archive the thread JSON
-    json_url = py8chan.Url.thread_api_url(board_name, thread_id)
+    url_builder = py8chan.Url(board)
+    json_url = url_builder.thread_api_url(thread_id)
     download_json(os.path.join(path, "%s.json" % thread_id), json_url)
 
     # record the url of every file on the first thread, even extra files in posts
