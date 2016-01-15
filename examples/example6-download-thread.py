@@ -34,11 +34,8 @@ def download_file(local_filename, url, clobber=False):
 
 def download_json(local_filename, url, clobber=False):
     """Download the given JSON file, and pretty-print before we output it."""
-    
-    # write reformatted json
     with open(local_filename, 'w') as json_file:
-        json_data = download_file(local_filename, url, clobber)
-        json_file.write(json.dumps(json_data, sort_keys=True, indent=2, separators=(',', ': ')))
+        json_file.write(json.dumps(requests.get(url).json(), sort_keys=True, indent=2, separators=(',', ': ')))
 
 def main():
     if len(sys.argv) < 2 or len(sys.argv) > 3:
@@ -60,8 +57,9 @@ def main():
     mkdirs(images_path)
 
     # archive the thread JSON
-    url_builder = py8chan.Url(board)
+    url_builder = py8chan.Url(board_name)
     json_url = url_builder.thread_api_url(thread_id)
+    print(url_builder.thread_api_url(thread_id))
     download_json(os.path.join(path, "%s.json" % thread_id), json_url)
 
     # record the url of every file on the first thread, even extra files in posts
