@@ -32,7 +32,6 @@ class Thread(object):
         self.omitted_posts = 0
         self.omitted_images = 0
         self.want_update = False
-        self._last_modified = None
 
     def __len__(self):
         return self.num_replies
@@ -49,6 +48,11 @@ class Thread(object):
     def sticky(self):
         return self.topic._data.get('sticky') == 1
 
+    # 8chan puts last modified in JSON instead of the HTTP header
+    @property
+    def _last_modified(self):
+        return self.topic._data.get('last-modified')
+
     @classmethod
     def _from_request(cls, board, res, id):
         if res.status_code == 404:
@@ -56,12 +60,11 @@ class Thread(object):
 
         res.raise_for_status()
 
-        return cls._from_json(res.json(), board, id, res.headers['Last-Modified'])
+        return cls._from_json(res.json(), board, id)
 
     @classmethod
-    def _from_json(cls, json, board, id=None, last_modified=None):
+    def _from_json(cls, json, board, id=None):
         t = cls(board, id)
-        t._last_modified = last_modified
 
         posts = json['posts']
         head, rest = posts[0], posts[1:]
