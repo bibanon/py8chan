@@ -202,7 +202,6 @@ class Thread(object):
             self.omitted_images = 0
             self.omitted_posts = 0
 
-            self._last_modified = res.headers['Last-Modified']
             posts = res.json()['posts']
 
             original_post_count = len(self.replies)
