@@ -28,7 +28,7 @@ class Url(object):
         DOMAIN = {
             'api': self._protocol + self._site_url,   # API subdomain
             'boards': self._protocol + self._site_url, # HTML subdomain
-            'file': self._protocol + self._site_url,  # file (image) host
+            'file': self._protocol + "media." + self._site_url,  # file (image) host
             'static': self._protocol + self._site_url + "/static" # static host
         }
         
@@ -43,8 +43,8 @@ class Url(object):
                 'thread': DOMAIN['boards'] + '/{board}/res/{thread_id}.html'
             },
             'data': {
-                'file': DOMAIN['file'] + '/{board}/src/{tim}{ext}',
-                'thumbs': DOMAIN['file'] + '/{board}/thumb/{tim}.jpg',
+                'file': DOMAIN['file'] + '/file_store/{tim}{ext}',
+                'thumbs': DOMAIN['file'] + '/file_store/thumb/{tim}.jpg',
                 'static': DOMAIN['static'] + '/{item}'
             }
         }
