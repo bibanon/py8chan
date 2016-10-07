@@ -19,8 +19,10 @@ class Url(object):
         # List (JSON) - http://8ch.net/newspaper/threads.json
         # Catalog (JSON) - http://8ch.net/newspaper/catalog.json
         #
-        # Image - https://8ch.net/newspaper/src/1421068790600.jpg
-        # Thumb - https://8ch.net/newspaper/thumb/1421068790600.jpg
+        # Image (old) - https://8ch.net/newspaper/src/1421068790600.jpg
+        # Thumb (old) - https://8ch.net/newspaper/thumb/1421068790600.jpg
+        # Image (new) - https://media.8ch.net/file_store/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
+        # Thumb (new) - https://media.8ch.net/file_store/thumb/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
         #
         # Static - http://8ch.net/static/blank.gif
         
@@ -28,7 +30,7 @@ class Url(object):
         DOMAIN = {
             'api': self._protocol + self._site_url,   # API subdomain
             'boards': self._protocol + self._site_url, # HTML subdomain
-            'file': self._protocol + self._site_url,  # file (image) host
+            'file': self._protocol + "media." + self._site_url,  # file (image) host
             'static': self._protocol + self._site_url + "/static" # static host
         }
         
@@ -43,8 +45,10 @@ class Url(object):
                 'thread': DOMAIN['boards'] + '/{board}/res/{thread_id}.html'
             },
             'data': {
-                'file': DOMAIN['file'] + '/{board}/src/{tim}{ext}',
-                'thumbs': DOMAIN['file'] + '/{board}/thumb/{tim}.jpg',
+                'file': DOMAIN['file'] + '/file_store/{tim}{ext}',
+                'thumbs': DOMAIN['file'] + '/file_store/thumb/{tim}{ext}',
+                'old_file': DOMAIN['file'] + '/{board}/src/{tim}{ext}',
+                'old_thumbs': DOMAIN['file'] + '/{board}/thumb/{tim}.jpg',
                 'static': DOMAIN['static'] + '/{item}'
             }
         }
@@ -107,18 +111,37 @@ class Url(object):
     
     # generate file URL
     def file_url(self, tim, ext):
-        return self.URL['data']['file'].format(
-            board=self._board,
-            tim=tim,
-            ext=ext
-            )
-    
+        # old or new file URL
+        if len(tim) == 13:
+            return self.URL['data']['old_file'].format(
+                board=self._board,
+                tim=tim,
+                ext=ext
+                )
+        else:
+            return self.URL['data']['file'].format(
+                tim=tim,
+                ext=ext
+                )
+
     # generate thumb URL
-    def thumb_url(self, tim):
-        return self.URL['data']['thumbs'].format(
-            board=self._board,
-            tim=tim
-            )
+    def thumb_url(self, tim, ext):
+        # old or new file URL
+        if len(tim) == 13:
+            return self.URL['data']['old_thumbs'].format(
+                board=self._board,
+                tim=tim
+                )
+        else:
+            # PNGs are not converted to JPGs
+            thumb_ext = '.jpg'
+            if ext == '.png':
+                thumb_ext = '.png'
+
+            return self.URL['data']['thumbs'].format(
+                tim=tim,
+                ext=thumb_ext
+                )
     
     # return entire URL dictionary
     @property
