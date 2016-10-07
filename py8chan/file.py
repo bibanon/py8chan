@@ -15,7 +15,8 @@ class File(object):
     Attributes:
         file_md5 (string): MD5 hash of the file attached to this post.
         file_md5_hex (string): Hex-encoded MD5 hash of the file attached to this post.
-        filename (string): Original name of the file attached to this post.
+        filename_original (string): Original name of the file attached to this post.
+        filename (string): Filename of the file attached to this post.
         file_url (string): URL of the file attached to this post.
         file_extension (string): Extension of the file attached to this post. Eg: ``png``, ``webm``, etc.
         file_size (int): Size of the file attached to this post.
@@ -43,6 +44,13 @@ class File(object):
     @property
     def file_md5_hex(self):
         return hexlify(self.file_md5).decode('ascii')
+
+    @property
+    def filename_original(self):
+        return '%s%s' % (
+            self._data['filename'],
+            self._data['ext']
+        )
 
     @property
     def filename(self):
@@ -89,15 +97,21 @@ class File(object):
 
     @property
     def thumbnail_fname(self):
-        return '%ss.jpg' % (
-            self._data['tim']
-        )
+        if self._data['ext'] != '.png':
+            return '%s.jpg' % (
+                self._data['tim'],
+            )
+        else:
+            return '%s.png' % (
+                self._data['tim'],
+            )
 
     @property
     def thumbnail_url(self):
         board = self._post._thread._board
         return self._url.thumb_url(
-            self._data['tim']
+            self._data['tim'],
+            self._data['ext']
         )
 
     def file_request(self):
