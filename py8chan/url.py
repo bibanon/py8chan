@@ -115,12 +115,12 @@ class Url(object):
         if len(tim) == 13:
             return self.URL['data']['old_file'].format(
                 board=self._board,
-                tim=tim
+                tim=tim,
                 ext=ext
                 )
         else:
             return self.URL['data']['file'].format(
-                tim=tim
+                tim=tim,
                 ext=ext
                 )
 
@@ -139,7 +139,7 @@ class Url(object):
                 thumb_ext = '.png'
 
             return self.URL['data']['thumbs'].format(
-                tim=tim
+                tim=tim,
                 ext=thumb_ext
                 )
     
