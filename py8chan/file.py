@@ -97,9 +97,14 @@ class File(object):
 
     @property
     def thumbnail_fname(self):
-        return '%s.jpg' % (
-            self._data['tim']
-        )
+        if self._data['ext'] != '.png':
+            return '%s.jpg' % (
+                self._data['tim'],
+            )
+        else:
+            return '%s.png' % (
+                self._data['tim'],
+            )
 
     @property
     def thumbnail_url(self):
