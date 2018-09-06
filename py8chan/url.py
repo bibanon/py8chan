@@ -112,14 +112,14 @@ class Url(object):
     # generate file URL
     def file_url(self, tim, ext):
         # old or new file URL
-        if len(tim) == 13:
-            return self.URL['data']['old_file'].format(
-                board=self._board,
+        if len(tim) == 64:
+            return self.URL['data']['file'].format(
                 tim=tim,
                 ext=ext
                 )
         else:
-            return self.URL['data']['file'].format(
+            return self.URL['data']['old_file'].format(
+                board=self._board,
                 tim=tim,
                 ext=ext
                 )
@@ -127,12 +127,7 @@ class Url(object):
     # generate thumb URL
     def thumb_url(self, tim, ext):
         # old or new file URL
-        if len(tim) == 13:
-            return self.URL['data']['old_thumbs'].format(
-                board=self._board,
-                tim=tim
-                )
-        else:
+        if len(tim) == 64:
             # PNGs are not converted to JPGs
             thumb_ext = '.jpg'
             if ext == '.png':
@@ -141,6 +136,11 @@ class Url(object):
             return self.URL['data']['thumbs'].format(
                 tim=tim,
                 ext=thumb_ext
+                )
+        else:
+            return self.URL['data']['old_thumbs'].format(
+                board=self._board,
+                tim=tim
                 )
     
     # return entire URL dictionary
