@@ -111,7 +111,7 @@ class Url(object):
     
     # generate file URL
     def file_url(self, tim, ext):
-        # old or new file URL
+        # new or old file URL
         if len(tim) == 64:
             return self.URL['data']['file'].format(
                 tim=tim,
@@ -126,7 +126,7 @@ class Url(object):
 
     # generate thumb URL
     def thumb_url(self, tim, ext):
-        # old or new file URL
+        # new or old file URL
         if len(tim) == 64:
             # PNGs are not converted to JPGs
             thumb_ext = '.jpg'
