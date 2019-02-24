@@ -31,7 +31,15 @@ def _fetch_boards_metadata(url_generator):
     if not _metadata:
         resp = requests.get(url_generator.board_list())
         resp.raise_for_status()
-        data = {entry['board']: entry for entry in resp.json()['boards']}
+        # data = {entry['board']: entry for entry in resp.json()['boards']}
+        boards_list = resp.json()
+        assert(type(boards_list) is list)# This should be a list of board atribute dicts.
+        data = {}
+        for board in boards_list:
+            assert(type(board) is dict)# This should be a dict of board attributes.
+            uri = board['uri']
+            assert(type(board) is unicode)# This should be text.
+            data[uri] = board
         _metadata.update(data)
 
 
@@ -100,7 +108,7 @@ class Board(object):
         self._thread_cache = {}
 
     def _get_metadata(self, key):
-        return _get_board_metadata(self._url, self._board_name, key)
+        return _get_board_metadata(url_generator=self._url, board=self._board_name, key=key)
 
     def _get_json(self, url):
         res = self._requests_session.get(url)
