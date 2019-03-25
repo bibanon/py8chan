@@ -71,7 +71,7 @@ def get_all_boards(*args, **kwargs):
 
 
 class Board(object):
-	"""Represents a 8chan board.
+	"""Represents an 8chan board.
 
 	Attributes:
 		name (str): Name of this board, such as ``tg`` or ``k``.
@@ -98,6 +98,19 @@ class Board(object):
 		self._requests_session.headers['User-Agent'] = 'py-8chan/%s' % __version__
 
 		self._thread_cache = {}
+		
+		# 8chan catalog information contained in API request
+		self._uri = self._get_metadata('uri')
+		self._title = self._get_metadata('title')
+		self._subtitle = self._get_metadata('subtitle')
+		self._indexed = self._get_metadata('indexed')
+		self._sfw = self._get_metadata('sfw')
+		self._weight = self._get_metadata('weight')
+		self._locale = self._get_metadata('locale')
+		self._tags = self._get_metadata('tags')
+		self._max = self._get_metadata('max')
+		self._pph = self._get_metadata('pph')
+		self._ppd = self._get_metadata('ppd')
 
 	def _get_metadata(self, key):
 		return _get_board_metadata(self._url, self._board_name, key)
@@ -259,25 +272,62 @@ class Board(object):
 	def name(self):
 		return self._board_name
 
-	"""8chan uses a completely different catalog system. We will have to disable these board information features until we manage to figure it out."""
+	@property
+	def uri(self):
+		return self._uri
+
 	@property
 	def title(self):
-		raise AttributeError( "'py8chan.Board' object has no attribute 'title'" )
+		return self._title
+
+	@property
+	def subtitle(self):
+		return self._subtitle
+
+	@property
+	def index(self):
+		return self._indexed
 	
 	@property
 	def is_worksafe(self):
-		raise AttributeError( "'py8chan.Board' object has no attribute 'is_worksafe'" )
-	
-	# py8chan does not use page_count variable, unlike BASC-py4chan
-	@property
-	def page_count(self):
-		raise AttributeError( "'py8chan.Board' object has no attribute 'page_count'" )
-	
-	# py8chan does not use threads_per_page variable, unlike BASC-py4chan
-	@property
-	def threads_per_page(self):
-		raise AttributeError( "'py8chan.Board' object has no attribute 'threads_per_page'" )
+		return self._sfw
 
+	@property
+	def num_posts(self):
+		return self._get_metadata('posts_total')
+
+	@property
+	def time(self):
+		return self._get_metadata('time')
+
+	@property
+	def weight(self):
+		return self._weight
+
+	@property
+	def locale(self):
+		return self._locale
+
+	@property
+	def tags(self):
+		return self._tags
+
+	@property
+	def max_users(self):
+		return self._max
+
+	@property
+	def active_users(self):
+		return self._get_metadata('active')
+
+	@property
+	def hourly_users(self):
+		return self._pph
+
+	@property
+	def daily_users(self):
+		return self._ppd
+	
 	@property
 	def https(self):
 		return self._https
