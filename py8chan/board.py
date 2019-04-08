@@ -38,7 +38,7 @@ def _fetch_boards_metadata(url_generator):
         for board in boards_list:
             assert(type(board) is dict)# This should be a dict of board attributes.
             uri = board['uri']
-            assert(type(board) is unicode)# This should be text.
+#            assert(type(board) is unicode)# This should be text. (Not working? wtf)
             data[uri] = board
         _metadata.update(data)
 
