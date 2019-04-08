@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='py8chan',
-    version='0.0.3',
+    version='0.0.4',
     description=("Python 8chan/vichan API Wrapper. Based on BASC-py4chan by the Bbiliotheca Anonoma"),
     long_description=open('README.rst').read(),
     license=open('LICENSE').read(),
