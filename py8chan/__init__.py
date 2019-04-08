@@ -5,9 +5,9 @@
 # and/or modify it under the terms of the Do What The Fuck You Want
 # To Public License, Version 2, as published by Sam Hocevar. See
 # the LICENSE file for more details.
-"""4chan Python Library.
+"""8chan Python Library.
 
-BASC-py4chan is a Python library that gives access to the 4chan API
+BASC-py8chan is a Python library that gives access to the 8chan API
 and an object-oriented way to browse and get board and thread
 information quickly and easily.
 """

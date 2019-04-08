@@ -31,7 +31,7 @@ def _fetch_boards_metadata(url_generator):
     if not _metadata:
         resp = requests.get(url_generator.board_list())
         resp.raise_for_status()
-        data = {entry['board']: entry for entry in resp.json()['boards']}
+        data = {entry['uri']: entry for entry in resp.json()}
         _metadata.update(data)
 
 
@@ -41,13 +41,13 @@ def _get_board_metadata(url_generator, board, key):
 
 
 def get_boards(board_name_list, *args, **kwargs):
-    """Given a list of boards, return :class:`basc_py4chan.Board` objects.
+    """Given a list of boards, return :class:`basc_py8chan.Board` objects.
 
     Args:
         board_name_list (list): List of board names to get, eg: ['b', 'tg']
 
     Returns:
-        dict of :class:`basc_py4chan.Board`: Requested boards.
+        dict of :class:`basc_py8chan.Board`: Requested boards.
     """
     if isinstance(board_name_list, basestring):
         board_name_list = board_name_list.split()
@@ -55,10 +55,10 @@ def get_boards(board_name_list, *args, **kwargs):
 
 
 def get_all_boards(*args, **kwargs):
-    """Returns every board on 4chan.
+    """Returns every board on 8chan.
 
     Returns:
-        dict of :class:`basc_py4chan.Board`: All boards.
+        dict of :class:`basc_py8chan.Board`: All boards.
     """
     # Use https based on how the Board class instances are to be instantiated
     https = kwargs.get('https', args[1] if len(args) > 1 else False)
@@ -71,7 +71,7 @@ def get_all_boards(*args, **kwargs):
 
 
 class Board(object):
-    """Represents a 4chan board.
+    """Represents an 8chan board.
 
     Attributes:
         name (str): Name of this board, such as ``tg`` or ``k``.
@@ -82,11 +82,11 @@ class Board(object):
         threads_per_page (int): How many threads there are on each page.
     """
     def __init__(self, board_name, https=False, session=None):
-        """Creates a :mod:`basc_py4chan.Board` object.
+        """Creates a :mod:`basc_py8chan.Board` object.
 
         Args:
             board_name (string): Name of the board, such as "tg" or "etc".
-            https (bool): Whether to use a secure connection to 4chan.
+            https (bool): Whether to use a secure connection to 8chan.
             session: Existing requests.session object to use instead of our current one.
         """
         self._board_name = board_name
@@ -95,9 +95,22 @@ class Board(object):
         self._url = Url(board=board_name, https=self._https)
 
         self._requests_session = session or requests.session()
-        self._requests_session.headers['User-Agent'] = 'py-4chan/%s' % __version__
+        self._requests_session.headers['User-Agent'] = 'py-8chan/%s' % __version__
 
         self._thread_cache = {}
+        
+        # 8chan catalog information contained in API request
+        self._uri = self._get_metadata('uri')
+        self._title = self._get_metadata('title')
+        self._subtitle = self._get_metadata('subtitle')
+        self._indexed = self._get_metadata('indexed')
+        self._sfw = self._get_metadata('sfw')
+        self._weight = self._get_metadata('weight')
+        self._locale = self._get_metadata('locale')
+        self._tags = self._get_metadata('tags')
+        self._max = self._get_metadata('max')
+        self._pph = self._get_metadata('pph')
+        self._ppd = self._get_metadata('ppd')
 
     def _get_metadata(self, key):
         return _get_board_metadata(self._url, self._board_name, key)
@@ -108,7 +121,7 @@ class Board(object):
         return res.json()
 
     def get_thread(self, thread_id, update_if_cached=True, raise_404=False):
-        """Get a thread from 4chan via 4chan API.
+        """Get a thread from 8chan via 8chan API.
 
         Args:
             thread_id (int): Thread ID
@@ -116,7 +129,7 @@ class Board(object):
             raise_404 (bool): Raise an Exception if thread has 404'd
 
         Returns:
-            :class:`basc_py4chan.Thread`: Thread object
+            :class:`basc_py8chan.Thread`: Thread object
         """
         # see if already cached
         cached_thread = self._thread_cache.get(thread_id)
@@ -197,13 +210,13 @@ class Board(object):
         already in our cache, the cached version is returned and thread.want_update is
         set to True on the specific thread object.
     
-        Pages on 8chan/vichan are indexed from 0 onwards. (not 1 as in modern 4chan: 4chan used to start from 0)
+        Pages on 8chan/vichan are indexed from 0 onwards. (not 1 as in modern 8chan: 8chan used to start from 0)
     
         Args:
             page (int): Page to request threads for. Defaults to the first page.
     
         Returns:
-            list of :mod:`basc_py4chan.Thread`: List of Thread objects representing the threads on the given page.
+            list of :mod:`basc_py8chan.Thread`: List of Thread objects representing the threads on the given page.
         """
         url = self._url.page_url(page)
         return self._request_threads(url)
@@ -233,7 +246,7 @@ class Board(object):
                 If enabled, this option can be very slow and bandwidth-intensive.
 
         Returns:
-            list of :mod:`basc_py4chan.Thread`: List of Thread objects representing every thread on this board.
+            list of :mod:`basc_py8chan.Thread`: List of Thread objects representing every thread on this board.
         """
         if not expand:
             return self._request_threads(self._url.catalog())
@@ -259,25 +272,62 @@ class Board(object):
     def name(self):
         return self._board_name
 
-    """8chan uses a completely different catalog system. We will have to disable these board information features until we manage to figure it out."""
+    @property
+    def uri(self):
+        return self._uri
+
     @property
     def title(self):
-        raise AttributeError( "'py8chan.Board' object has no attribute 'title'" )
+        return self._title
+
+    @property
+    def subtitle(self):
+        return self._subtitle
+
+    @property
+    def index(self):
+        return self._indexed
     
     @property
     def is_worksafe(self):
-        raise AttributeError( "'py8chan.Board' object has no attribute 'is_worksafe'" )
-    
-    # py8chan does not use page_count variable, unlike BASC-py4chan
-    @property
-    def page_count(self):
-        raise AttributeError( "'py8chan.Board' object has no attribute 'page_count'" )
-    
-    # py8chan does not use threads_per_page variable, unlike BASC-py4chan
-    @property
-    def threads_per_page(self):
-        raise AttributeError( "'py8chan.Board' object has no attribute 'threads_per_page'" )
+        return self._sfw
 
+    @property
+    def num_posts(self):
+        return self._get_metadata('posts_total')
+
+    @property
+    def time(self):
+        return self._get_metadata('time')
+
+    @property
+    def weight(self):
+        return self._weight
+
+    @property
+    def locale(self):
+        return self._locale
+
+    @property
+    def tags(self):
+        return self._tags
+
+    @property
+    def max_users(self):
+        return self._max
+
+    @property
+    def active_users(self):
+        return self._get_metadata('active')
+
+    @property
+    def hourly_users(self):
+        return self._pph
+
+    @property
+    def daily_users(self):
+        return self._ppd
+    
     @property
     def https(self):
         return self._https
