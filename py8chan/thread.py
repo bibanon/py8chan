@@ -217,7 +217,7 @@ class Thread(object):
             if not post_count_delta:
                 return 0
 
-            self.last_reply_id = self.replies[-1].post_number
+            self.last_reply_id = self.replies[-1].post_id
 
             return post_count_delta
 

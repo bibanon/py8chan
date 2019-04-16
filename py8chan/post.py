@@ -53,6 +53,11 @@ class Post(object):
     def post_id(self):
         return self._data.get('no')
 
+    # TODO: No idea what this means but it's in the post info JSON response
+    @property
+    def resto(self):
+        return self._data.get('resto')
+
     @property
     def subject(self):
         return self._data.get('sub')
@@ -60,6 +65,15 @@ class Post(object):
     @property
     def html_comment(self):
         return self._data.get('com', '')
+
+    # TODO: This seems like unessential code. Consider removing
+    @property
+    def comment(self):
+        return self.html_comment.replace('<wbr>', '')
+
+    @property
+    def text_comment(self):
+        return clean_comment_body(self.html_comment)
 
     @property
     def name(self):
@@ -70,9 +84,32 @@ class Post(object):
         return self._data.get('time')
 
     @property
+    def datetime(self):
+        if self._data.get('time') is not None:
+            return datetime.fromtimestamp(self._data.get('time'))
+        else:
+            return None
+
+    @property
+    def omitted_posts(self):
+        return self._data.get('omitted_posts')
+
+    @property
+    def omitted_images(self):
+        return self._data.get('omitted_images')
+
+    @property
+    def replies(self):
+        return self._data.get('replies')
+
+
+
+
+    @property
     def poster_id(self):
         return self._data.get('id')
 
+    # TODO: does not exist for 8chan posts as far as I can see
     @property
     def email(self):
         return self._data.get('email')
@@ -81,17 +118,6 @@ class Post(object):
     def tripcode(self):
         return self._data.get('trip')
 
-    @property
-    def text_comment(self):
-        return clean_comment_body(self.html_comment)
-
-    @property
-    def comment(self):
-        return self.html_comment.replace('<wbr>', '')
-
-    @property
-    def datetime(self):
-        return datetime.fromtimestamp(self._data.get('time'))
 
     @property
     def first_file(self):
