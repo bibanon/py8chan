@@ -53,7 +53,7 @@ class Post(object):
     def post_id(self):
         return self._data.get('no')
 
-    # TODO: No idea what this means but it's in the post info JSON response
+    # TODO: Can anyone clarify what this is?
     @property
     def resto(self):
         return self._data.get('resto')
@@ -91,33 +91,28 @@ class Post(object):
             return None
 
     @property
-    def omitted_posts(self):
-        return self._data.get('omitted_posts')
-
-    @property
-    def omitted_images(self):
-        return self._data.get('omitted_images')
-
-    @property
-    def replies(self):
-        return self._data.get('replies')
-
-
-
+    def last_modified(self):
+        return self._data.get('last_modified')
 
     @property
     def poster_id(self):
         return self._data.get('id')
 
-    # TODO: does not exist for 8chan posts as far as I can see
     @property
-    def email(self):
-        return self._data.get('email')
+    def sticky(self):
+        return self._data.get('sticky')
 
     @property
-    def tripcode(self):
-        return self._data.get('trip')
+    def locked(self):
+        return self._data.get('locked')
 
+    @property
+    def cyclical(self):
+        return self._data.get('cyclical')
+
+    @property
+    def bumplocked(self):
+        return self._data.get('bumplocked')
 
     @property
     def first_file(self):
@@ -157,18 +152,8 @@ class Post(object):
 
     @property
     def url(self):
-        return '%s#p%i' % (self._thread.url, self.post_number)
+        return '%s#%i' % (self._thread.url, self.post_id)
     
-    # 8chan/vichan does not use semantic urls
-    @property
-    def semantic_url(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_url'" )
-    
-    # 8chan/vichan does not use semantic slugs
-    @property
-    def semantic_slug(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_slug'" )
-
     def __repr__(self):
         return '<Post /%s/%i#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,
