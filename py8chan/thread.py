@@ -263,6 +263,4 @@ class Thread(object):
                 self.omitted_images, self.omitted_posts
             )
 
-        return '<Thread /%s/%i, %i replies%s>' % (
-            self._board.name, self.id, len(self.replies), extra
-        )
+        return f'<Thread {self._board.name}, {self.id}  replies {len(self.replies)}>'

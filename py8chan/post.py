@@ -52,24 +52,6 @@ class Post(object):
     @property
     def post_id(self):
         return self._data.get('no')
-    number = num = no = post_number = post_id
-
-    # (May Change) 8chan/vichan does not use administrative IDs
-    @property
-    def poster_id(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'poster_id'" )
-
-    @property
-    def name(self):
-        return self._data.get('name')
-
-    @property
-    def email(self):
-        return self._data.get('email')
-
-    @property
-    def tripcode(self):
-        return self._data.get('trip')
 
     @property
     def subject(self):
@@ -80,6 +62,26 @@ class Post(object):
         return self._data.get('com', '')
 
     @property
+    def name(self):
+        return self._data.get('name')
+
+    @property
+    def time(self):
+        return self._data.get('time')
+
+    @property
+    def poster_id(self):
+        return self._data.get('id')
+
+    @property
+    def email(self):
+        return self._data.get('email')
+
+    @property
+    def tripcode(self):
+        return self._data.get('trip')
+
+    @property
     def text_comment(self):
         return clean_comment_body(self.html_comment)
 
@@ -88,12 +90,8 @@ class Post(object):
         return self.html_comment.replace('<wbr>', '')
 
     @property
-    def timestamp(self):
-        return self._data['time']
-
-    @property
     def datetime(self):
-        return datetime.fromtimestamp(self._data['time'])
+        return datetime.fromtimestamp(self._data.get('time'))
 
     @property
     def first_file(self):
