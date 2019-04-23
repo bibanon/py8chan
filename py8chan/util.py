@@ -3,6 +3,7 @@
 """Utility functions."""
 
 import re
+import html
 
 # HTML parser was renamed in python 3.x
 try:
@@ -19,8 +20,9 @@ def clean_comment_body(body):
     Converts all HTML tags and entities within 4chan comments
     into human-readable text equivalents.
     """
-    body = _parser.unescape(body)
+    body = html.unescape(body)
     body = re.sub(r'<a [^>]+>(.+?)</a>', r'\1', body)
     body = body.replace('<br>', '\n')
+    body = body.replace('<p class="body-line ltr ">', '\n')
     body = re.sub(r'<.+?>', '', body)
     return body

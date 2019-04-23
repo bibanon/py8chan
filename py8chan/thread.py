@@ -217,7 +217,7 @@ class Thread(object):
             if not post_count_delta:
                 return 0
 
-            self.last_reply_id = self.replies[-1].post_number
+            self.last_reply_id = self.replies[-1].post_id
 
             return post_count_delta
 
@@ -263,6 +263,4 @@ class Thread(object):
                 self.omitted_images, self.omitted_posts
             )
 
-        return '<Thread /%s/%i, %i replies%s>' % (
-            self._board.name, self.id, len(self.replies), extra
-        )
+        return f'<Thread {self._board.name}, {self.id}  replies {len(self.replies)}>'

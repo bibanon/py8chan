@@ -52,24 +52,11 @@ class Post(object):
     @property
     def post_id(self):
         return self._data.get('no')
-    number = num = no = post_number = post_id
 
-    # (May Change) 8chan/vichan does not use administrative IDs
+    # TODO: Can anyone clarify what this is?
     @property
-    def poster_id(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'poster_id'" )
-
-    @property
-    def name(self):
-        return self._data.get('name')
-
-    @property
-    def email(self):
-        return self._data.get('email')
-
-    @property
-    def tripcode(self):
-        return self._data.get('trip')
+    def resto(self):
+        return self._data.get('resto')
 
     @property
     def subject(self):
@@ -79,21 +66,53 @@ class Post(object):
     def html_comment(self):
         return self._data.get('com', '')
 
-    @property
-    def text_comment(self):
-        return clean_comment_body(self.html_comment)
-
+    # TODO: This seems like unessential code. Consider removing
     @property
     def comment(self):
         return self.html_comment.replace('<wbr>', '')
 
     @property
-    def timestamp(self):
-        return self._data['time']
+    def text_comment(self):
+        return clean_comment_body(self.html_comment)
+
+    @property
+    def name(self):
+        return self._data.get('name')
+
+    @property
+    def time(self):
+        return self._data.get('time')
 
     @property
     def datetime(self):
-        return datetime.fromtimestamp(self._data['time'])
+        if self._data.get('time') is not None:
+            return datetime.fromtimestamp(self._data.get('time'))
+        else:
+            return None
+
+    @property
+    def last_modified(self):
+        return self._data.get('last_modified')
+
+    @property
+    def poster_id(self):
+        return self._data.get('id')
+
+    @property
+    def sticky(self):
+        return self._data.get('sticky')
+
+    @property
+    def locked(self):
+        return self._data.get('locked')
+
+    @property
+    def cyclical(self):
+        return self._data.get('cyclical')
+
+    @property
+    def bumplocked(self):
+        return self._data.get('bumplocked')
 
     @property
     def first_file(self):
@@ -133,18 +152,8 @@ class Post(object):
 
     @property
     def url(self):
-        return '%s#p%i' % (self._thread.url, self.post_number)
+        return '%s#%i' % (self._thread.url, self.post_id)
     
-    # 8chan/vichan does not use semantic urls
-    @property
-    def semantic_url(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_url'" )
-    
-    # 8chan/vichan does not use semantic slugs
-    @property
-    def semantic_slug(self):
-        raise AttributeError( "'py8chan.Post' object has no attribute 'semantic_slug'" )
-
     def __repr__(self):
         return '<Post /%s/%i#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,

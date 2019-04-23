@@ -31,14 +31,13 @@ def _fetch_boards_metadata(url_generator):
     if not _metadata:
         resp = requests.get(url_generator.board_list())
         resp.raise_for_status()
-        # data = {entry['board']: entry for entry in resp.json()['boards']}
         boards_list = resp.json()
         assert(type(boards_list) is list)# This should be a list of board atribute dicts.
         data = {}
         for board in boards_list:
             assert(type(board) is dict)# This should be a dict of board attributes.
             uri = board['uri']
-#            assert(type(board) is unicode)# This should be text. (Not working? wtf)
+            assert(type(uri) is unicode)# This should be text.
             data[uri] = board
         _metadata.update(data)
 
