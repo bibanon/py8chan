@@ -8,19 +8,24 @@ from .file import File
 
 
 class Post(object):
-    """Represents a 4chan post.
+    """Represents an 8chan post. See the following Swagger definition for more details.
+    https://gitlab.com/N3X15/8chan-API/blob/master/definitions/Post.json
 
     Attributes:
         post_id (int): ID of this post. Eg: ``123123123``, ``456456456``.
-        poster_id (int): Poster ID.
+        resto (int): Reply to. 0 is a thread OP.
         name (string): Poster's name.
-        email (string): Poster's email.
+        poster_id (string) Hexadecimal ID used to differentiate between posters.  Only on boards with `poster_ids` set to `true`.
         tripcode (string): Poster's tripcode.
         subject (string): Subject of this post.
         comment (string): This comment, with the <wbr> tag removed.
         html_comment (string): Original, direct HTML of this comment.
         text_comment (string): Plaintext version of this comment.
         is_op (bool): Whether this is the OP (first post of the thread)
+        sticky (bool): 1 if post is stickied, 0 if not.
+        locked (bool): 1 if post is locked, 0 if not.
+        cyclical (bool): 8ch Swagger docs say: "UNKNOWN! FIX ME!"
+        bumplocked (string): Presumably 1 if the thread can no longer be bumped, 0 if not.
         timestamp (int): Unix timestamp for this post.
         datetime (:class:`datetime.datetime`): Datetime time of this post.
         first_file (File): The first file of the post.
@@ -29,12 +34,6 @@ class Post(object):
         has_file (bool): Whether this post has a file attached to it.
         has_extra_files (bool): Whether this post has more than one file attached to it.
         url (string): URL of this post.
-    
-    Undefined Attributes (Not implemented in 8chan API. Do not use.): 
-        poster_id (int): Poster ID.
-        file_deleted (bool): Whether the file attached to this post was deleted after being posted.
-        semantic_url (string): URL of this post, with the thread's 'semantic' component.
-        semantic_slug (string): This post's 'semantic slug'.
     """
     def __init__(self, thread, data):
         self._thread = thread
@@ -53,7 +52,6 @@ class Post(object):
     def post_id(self):
         return self._data.get('no')
 
-    # TODO: Can anyone clarify what this is?
     @property
     def resto(self):
         return self._data.get('resto')
@@ -80,7 +78,7 @@ class Post(object):
         return self._data.get('name')
 
     @property
-    def time(self):
+    def timestamp(self):
         return self._data.get('time')
 
     @property

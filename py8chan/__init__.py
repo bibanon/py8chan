@@ -7,7 +7,7 @@
 # the LICENSE file for more details.
 """8chan Python Library.
 
-BASC-py8chan is a Python library that gives access to the 8chan API
+py8chan is a Python library that gives access to the 8chan API
 and an object-oriented way to browse and get board and thread
 information quickly and easily.
 """

@@ -48,11 +48,12 @@ Usage
 Documentation
 -------------
 
-This library mostly extends the classes of `BASC-py4chan <https://github.com/bibanon/BASC-py4chan>`_, but has some differences. See the py8chan documentation for more info.
+This library mostly extends the classes of `BASC-py4chan <https://github.com/bibanon/BASC-py4chan>`_, but has some slight but major differences. See the py8chan documentation for more info.
 
 `py8chan Documentation <http://py8chan.readthedocs.org/en/latest/index.html>`_
 
-Notice that some functions are not implemented in the 8chan API. These functions will `raise an AttributeError when used. <http://stackoverflow.com/a/23126260>`_
+`The official 8chan Swagger API documentation can be found here. <https://gitlab.com/N3X15/8chan-API/blob/master/definitions>`_
+
 
 License
 -------

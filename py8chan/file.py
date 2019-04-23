@@ -6,7 +6,9 @@ from base64 import b64decode
 from binascii import hexlify
 
 class File(object):
-    """ Represents File objects and their thumbnails.
+    """ Represents File objects and their thumbnails. See the following Swagger definition for more details.
+    https://gitlab.com/N3X15/8chan-API/blob/master/definitions/Post.json
+    https://gitlab.com/N3X15/8chan-API/blob/master/definitions/File.json
     
     Constructor:
         post (py8chan.Post) - parent Post object.

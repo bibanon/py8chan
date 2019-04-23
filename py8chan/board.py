@@ -78,7 +78,8 @@ def get_all_boards(*args, **kwargs):
 
 
 class Board(object):
-    """Represents an 8chan board.
+    """Represents an 8chan board. See the following 8chan Swagger API Documentation for more details.
+    https://gitlab.com/N3X15/8chan-API/blob/master/definitions/Board.json
 
     Attributes:
         name (str): Name of this board, such as ``tg`` or ``k``.
