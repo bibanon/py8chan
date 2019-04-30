@@ -80,9 +80,9 @@ class Thread(object):
 
         if id is not None:
             if not t.replies:
-                t.last_reply_id = t.topic.post_number
+                t.last_reply_id = t.topic.post_id
             else:
-                t.last_reply_id = t.replies[-1].post_number
+                t.last_reply_id = t.replies[-1].post_id
 
         else:
             t.want_update = True

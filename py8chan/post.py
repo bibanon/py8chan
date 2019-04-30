@@ -51,6 +51,7 @@ class Post(object):
     @property
     def post_id(self):
         return self._data.get('no')
+    number = num = no = post_number = post_id  # allows post_id to exist as multiple different names
 
     @property
     def resto(self):
@@ -156,7 +157,7 @@ class Post(object):
         return '<Post /%s/%i#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,
             self._thread.id,
-            self.post_number,
+            self.post_id,
             self.has_file,
             self.has_extra_files
         )
