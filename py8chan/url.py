@@ -7,24 +7,24 @@ class Url(object):
     def __init__(self, board, https=False):
         self._board = board
         self._protocol = 'https://' if https else 'http://'
-        self._site_url = "8ch.net"
+        self._site_url = "8kun.top"
         
         # Examples
-        # Site - http://8ch.net/
-        # Board (HTML) - http://8ch.net/newspaper/
-        # Thread (HTML) - http://8ch.net/newspaper/res/30.html
-        # Thread (JSON) - http://8ch.net/newspaper/res/30.html
+        # Site - http://8kun.top/
+        # Board (HTML) - http://8kun.top/newspaper/
+        # Thread (HTML) - http://8kun.top/newspaper/res/30.html
+        # Thread (JSON) - http://8kun.top/newspaper/res/30.html
         #
-        # Page (JSON) - http://8ch.net/newspaper/1.json
-        # List (JSON) - http://8ch.net/newspaper/threads.json
-        # Catalog (JSON) - http://8ch.net/newspaper/catalog.json
+        # Page (JSON) - http://8kun.top/newspaper/1.json
+        # List (JSON) - http://8kun.top/newspaper/threads.json
+        # Catalog (JSON) - http://8kun.top/newspaper/catalog.json
         #
-        # Image (old) - https://8ch.net/newspaper/src/1421068790600.jpg
-        # Thumb (old) - https://8ch.net/newspaper/thumb/1421068790600.jpg
-        # Image (new) - https://media.8ch.net/file_store/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
-        # Thumb (new) - https://media.8ch.net/file_store/thumb/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
+        # Image (old) - https://8kun.top/newspaper/src/1421068790600.jpg
+        # Thumb (old) - https://8kun.top/newspaper/thumb/1421068790600.jpg
+        # Image (new) - https://media.8kun.top/file_store/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
+        # Thumb (new) - https://media.8kun.top/file_store/thumb/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
         #
-        # Static - http://8ch.net/static/blank.gif
+        # Static - http://8kun.top/static/blank.gif
         
         # API URL Subdomains
         DOMAIN = {
