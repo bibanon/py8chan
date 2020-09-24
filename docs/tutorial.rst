@@ -19,7 +19,7 @@ Here's a short code snippet of us printing out how many threads are active on a 
     board = py8chan.Board('v')
     thread_ids = board.get_all_thread_ids()
     str_thread_ids = [str(id) for id in thread_ids]  # need to do this so str.join below works
-    print('There are', len(all_ids), 'active threads on /tg/:', ', '.join(str_thread_ids))
+    print('There are', len(thread_ids), 'active threads on /v/:', ', '.join(str_thread_ids))
 
 
 Threads

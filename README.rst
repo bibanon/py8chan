@@ -33,8 +33,8 @@ Usage
 .. code:: python
 
     import py8chan
-    b = py8chan.Board('b')
-    thread = b.get_thread(423491034)
+    board = py8chan.Board('v')
+    thread = board.get_thread(423491034)
 
     print(thread)
 

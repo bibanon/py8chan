@@ -30,15 +30,16 @@ Here is a sample application that grabs and prints :class:`py8chan.Thread` and :
 
     # print topic post information
     topic = thread.topic
+    image = topic.first_file
     print('Topic Repr', topic)
     print('Postnumber', topic.post_number)
     print('Timestamp', topic.timestamp)
     print('Datetime', repr(topic.datetime))
-    print('Filemd5hex', topic.file_md5_hex)
-    print('Fileurl', topic.file_url)
     print('Subject', topic.subject)
     print('Comment', topic.comment)
-    print('Thumbnailurl', topic.thumbnail_url)
+    print('Filemd5hex', image.file_md5_hex)
+    print('Fileurl', image.file_url)
+    print('Thumbnailurl', image.thumbnail_url)
 
 Basic Usage
 -----------
