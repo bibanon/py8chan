@@ -34,7 +34,8 @@ Usage
 
     import py8chan
     board = py8chan.Board('v')
-    thread = board.get_thread(423491034)
+    recent_thread = board.get_all_thread_ids()[0]
+    thread = board.get_thread(recent_thread)
 
     print(thread)
 
