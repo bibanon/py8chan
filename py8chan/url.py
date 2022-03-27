@@ -4,11 +4,12 @@
 # 8chan URL generator. Inherit and override this for derivative classes  (e.g. 420chan API, 8chan/vichan API)
 class Url(object):
     # default value for board in case user wants to query board list
-    def __init__(self, board, https=False):
+    def __init__(self, board, https=True):
         self._board = board
         self._protocol = 'https://' if https else 'http://'
         self._site_url = "8kun.top"
-        
+        self._media_url = "128ducks.com"
+
         # Examples
         # Site - http://8kun.top/
         # Board (HTML) - http://8kun.top/newspaper/
@@ -25,15 +26,15 @@ class Url(object):
         # Thumb (new) - https://media.8kun.top/file_store/thumb/bf2f563fe4394ee60e5288b1193c87e40c54f3fb57894db3b141b88b9e79ca7c.jpg
         #
         # Static - http://8kun.top/static/blank.gif
-        
+
         # API URL Subdomains
         DOMAIN = {
             'api': self._protocol + self._site_url,   # API subdomain
             'boards': self._protocol + self._site_url, # HTML subdomain
-            'file': self._protocol + "media." + self._site_url,  # file (image) host
-            'static': self._protocol + self._site_url + "/static" # static host
+            'file': self._protocol + "media." + self._media_url,  # file (image) host
+            'static': self._protocol + self._media_url + "/static" # static host
         }
-        
+
         # API URL Templates
         TEMPLATE = {
             'api': {  # URL structure templates
