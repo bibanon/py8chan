@@ -53,7 +53,7 @@ class Url(object):
                 'static': DOMAIN['static'] + '/{item}'
             }
         }
-        
+
         # API Listings
         LISTING = {
             'board_list': DOMAIN['api'] + '/boards.json',
@@ -61,55 +61,55 @@ class Url(object):
             'archived_thread_list': None,          # not used by 8chan/vichan
             'catalog': DOMAIN['api'] + '/{board}/catalog.json'
         }
-        
+
         # combine all dictionaries into self.URL dictionary
         self.URL = TEMPLATE
         self.URL.update({'domain': DOMAIN})
         self.URL.update({'listing': LISTING})
-    
+
     # generate boards listing URL
     def board_list(self):
         return self.URL['listing']['board_list']
-    
+
     # generate board page URL
     def page_url(self, page):
         return self.URL['api']['board'].format(
             board=self._board,
             page=page
             )
-    
+
     # generate catalog URL
     def catalog(self):
         return self.URL['listing']['catalog'].format(
             board=self._board
             )
-    
+
     # generate threads listing URL
     def thread_list(self):
         return self.URL['listing']['thread_list'].format(
             board=self._board
             )
-    
+
     # 8chan/vichan does not implement archives as far as we know.
     # must be enabled when BASC_py4chan begins to use this feature,
     # Maybe raise an AttributeError? Maybe set URL class to properties?
     #	def archived_thread_list():
     #		return None
-    
+
     # generate API thread URL
     def thread_api_url(self, thread_id):
         return self.URL['api']['thread'].format(
             board=self._board,
             thread_id=thread_id
             )
-    
+
     # generate HTTP thread URL
     def thread_url(self, thread_id):
         return self.URL['http']['thread'].format(
             board=self._board,
             thread_id=thread_id
             )
-    
+
     # generate file URL
     def file_url(self, tim, ext):
         # new or old file URL
@@ -143,7 +143,7 @@ class Url(object):
                 board=self._board,
                 tim=tim
                 )
-    
+
     # return entire URL dictionary
     @property
     def site_urls(self):

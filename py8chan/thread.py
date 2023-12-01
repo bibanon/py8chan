@@ -250,7 +250,7 @@ class Thread(object):
     @property
     def semantic_url(self):
         raise AttributeError( "'py8chan.Thread' object has no attribute 'semantic_url'" )
-    
+
     # 8chan/vichan does not use semantic slugs
     @property
     def semantic_slug(self):

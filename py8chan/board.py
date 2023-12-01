@@ -106,7 +106,7 @@ class Board(object):
         self._requests_session.headers['User-Agent'] = 'py-8chan/%s' % __version__
 
         self._thread_cache = {}
-        
+
         # 8chan catalog information contained in API request
         self._uri = self._get_metadata('uri')
         self._title = self._get_metadata('title')
@@ -295,7 +295,7 @@ class Board(object):
     @property
     def index(self):
         return self._indexed
-    
+
     @property
     def is_worksafe(self):
         return self._sfw
@@ -335,7 +335,7 @@ class Board(object):
     @property
     def daily_users(self):
         return self._ppd
-    
+
     @property
     def https(self):
         return self._https
