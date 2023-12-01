@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import re
 
 from .url import Url
 from .util import clean_comment_body
@@ -39,7 +40,7 @@ class Post(object):
         self._thread = thread
         self._data = data
         self._url = Url(board=self._thread._board.name, https=thread.https)        # 4chan URL generator
-        
+
         # add file objects if they exist
         if self.has_file:
             self.file1 = File(self, self._data)
@@ -84,8 +85,8 @@ class Post(object):
 
     @property
     def datetime(self):
-        if self._data.get('time') is not None:
-            return datetime.fromtimestamp(self._data.get('time'))
+        if self.timestamp is not None:
+            return datetime.fromtimestamp(self.timestamp)
         else:
             return None
 
@@ -114,10 +115,17 @@ class Post(object):
         return self._data.get('bumplocked')
 
     @property
+    def embed_url(self):
+        if self._data.get("embed"):
+            url_re = re.search('href="(.*?)"', self._data["embed"])
+            if url_re:
+                return url_re.group(1)
+        return None
+
+    @property
     def first_file(self):
         if not self.has_file:
             return None
-        
         return self.file1
 
     def all_files(self):
@@ -125,7 +133,7 @@ class Post(object):
         # append first file if it exists
         if self.has_file:
             yield self.file1
-        
+
         # append extra files if they exist
         if self.has_extra_files:
             for item in self._data['extra_files']:
@@ -152,7 +160,7 @@ class Post(object):
     @property
     def url(self):
         return '%s#%i' % (self._thread.url, self.post_id)
-    
+
     def __repr__(self):
         return '<Post /%s/%i#%i, has_file: %r, has_extra_files: %r>' % (
             self._thread._board.name,
